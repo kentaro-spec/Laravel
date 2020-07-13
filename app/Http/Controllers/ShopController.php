@@ -59,15 +59,15 @@ class ShopController extends Controller
 
    public function item_info(Request $request)
    {
-        $id=$request->stock_id;
-        $item = Stock::where('id', $id)->first();
+        $id = $request->stock_id;
+        $item = Stock::find($id);
+      //   $item = Stock::where('id', $id)->first();
         // dd($item);
        return view('item_info',compact('item'));
    }
 
 
 // 新商品投稿ページ始め
-//    商品投稿ページに飛ばすだけ。なくてもよさそう？
    public function post_item(Request $request)
    {
 
@@ -75,14 +75,16 @@ class ShopController extends Controller
    }
 
 //    新しく打ち込んだ商品をstocksテーブルに挿入する。
-   public function update_item(Request $request)
+   public function update_item(Request $request, Stock $stock)
    {
-    $this->validate($request, Stock::$rules);
-    $stock = new Stock;
+   //  $this->validate($request, Stock::$rules);
+   //  $stock = new Stock;
     // $stock->imgpath = 'none';
-    $form = $request->all();
+   //  $form = $request->all();
+    $form = $request->only(['name','detail','fee','imgpath']);
     unset($form['_token']);
-    $stock->fill($form)->save();
+   //  $stock->fill($form)->save();
+    $stock->create($form);
     return redirect('/',);
    }
 // 新商品投稿ページここまで
@@ -98,12 +100,15 @@ class ShopController extends Controller
       // return view('item_review',['reviews' => $reviews]);
 
       // モデルを使う
-      $stock_id = $request->id;
+      $id = $request->id;
       // dd($stock_id);
-      $item = Stock::where('id', $stock_id)->first();
-      $reviews = Review::where('stock_id',$stock_id)->get();
+      // $item = Stock::where('id', $stock_id)->first();
+      // $item = Stock::find($id);
+
+      // $reviews = Review::where('stock_id',$stock_id)->get();
+      $reviews = Stock::with('reviews')->find($id);
       // dd($reviews);
-      return view('item_review',['reviews' => $reviews, 'item' => $item]);
+      return view('item_review',['reviews' => $reviews]);
    }
    // 商品のレビュー投稿ページへ
    public function post_review(Request $request)
@@ -115,7 +120,7 @@ class ShopController extends Controller
    }
 
    // レビューを投稿する
- public function review(Request $request)
+ public function review(Request $request, Review $review)
    {
       // DBクラス
       // $param = [
@@ -127,13 +132,13 @@ class ShopController extends Controller
       // return redirect('/item_review');
       
       // モデルを使って挿入
-      $review = new Review;
-      $form = $request->all();
+      // $review = new Review;
+      // $form = $request->all();
+      $form = $request->only(['evaluation','review_title', 'comment','stock_id']);
       unset($form[('_token')]);
-      $review->fill($form)->save();
+      $review->create($form);
 
       $id = $request->stock_id;
-      $item = Stock::where('id', $id)->first();
 
       //stock_idを突っ込む
       // $review = new Review;
