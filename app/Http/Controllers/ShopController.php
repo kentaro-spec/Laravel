@@ -60,14 +60,15 @@ class ShopController extends Controller
    public function item_info(Request $request)
    {
         $id=$request->stock_id;
-        $item = Stock::where('id', $id)->first();
+       
+        $item = Stock::where('id', $id)->first();　//これfind($id)だけですみます！
         // dd($item);
        return view('item_info',compact('item'));
    }
 
 
 // 新商品投稿ページ始め
-//    商品投稿ページに飛ばすだけ。なくてもよさそう？
+//    商品投稿ページに飛ばすだけ。なくてもよさそう？　//コントローラーに書く方が無難です！！
    public function post_item(Request $request)
    {
 
@@ -78,11 +79,11 @@ class ShopController extends Controller
    public function update_item(Request $request)
    {
     $this->validate($request, Stock::$rules);
-    $stock = new Stock;
+    $stock = new Stock;　//メソッドインジェクションを使った方がcoolです！
     // $stock->imgpath = 'none';
-    $form = $request->all();
+    $form = $request->all();　//allは全部取得しちゃうのでonlyを使うと欲しいやつだけとれます！
     unset($form['_token']);
-    $stock->fill($form)->save();
+    $stock->fill($form)->save();　//んんんこれはcreateで済ますと早いかと思います！
     return redirect('/',);
    }
 // 新商品投稿ページここまで
@@ -100,8 +101,8 @@ class ShopController extends Controller
       // モデルを使う
       $stock_id = $request->id;
       // dd($stock_id);
-      $item = Stock::where('id', $stock_id)->first();
-      $reviews = Review::where('stock_id',$stock_id)->get();
+      $item = Stock::where('id', $stock_id)->first();　//同じくfind!
+      $reviews = Review::where('stock_id',$stock_id)->get(); //これでもOKですが、もし余裕があったらstockモデルでリレーションしてwithで関連するテーブルを取得するパターンもチェックしてみてください！（やってもらった記事に書いてるやつです！）
       // dd($reviews);
       return view('item_review',['reviews' => $reviews, 'item' => $item]);
    }
@@ -127,7 +128,7 @@ class ShopController extends Controller
       // return redirect('/item_review');
       
       // モデルを使って挿入
-      $review = new Review;
+      $review = new Review; //上記のupdate_itemと同じくです
       $form = $request->all();
       unset($form[('_token')]);
       $review->fill($form)->save();
