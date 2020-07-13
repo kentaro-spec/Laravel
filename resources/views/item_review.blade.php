@@ -28,7 +28,8 @@
                 </table>
                 <br>
                 @endforeach
-                <a href="{{ url('/post_review/?id='.$item->id) }}">この商品のレビューを書く</a>
+                {{-- <a href="{{ url('/post_review/?id='.$item->id) }}">この商品のレビューを書く</a> --}}
+                <a href="{{ Route('post_review',['id' => $item->id]) }}">この商品のレビューを書く</a>
             </div>
             </div>
        </div>

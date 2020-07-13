@@ -142,8 +142,10 @@ class ShopController extends Controller
       // $review->comment = $request->comment;
       // $review->stock_id = $request->stock_id;
       // $review->save();
-      return redirect('/item_review/?id='.$id,['item' => $item]);
-      // redirect()->route('review');
+
+      // return redirect('/item_review/?id='.$id);
+      return redirect()->route('review',['id' => $id]);
+      // 
 
    }
    

@@ -34,7 +34,9 @@
                                     @csrf
                                     <input type="hidden" name="stock_id" value="{{ $stock->id }}">
                                 </form>
-                                <a href="{{ url('/item_review/?id='.$stock->id) }}">この商品のレビューを見る</a>
+                                {{-- <a href="{{ url('/item_review/?id='.$stock->id) }}">この商品のレビューを見る</a> --}}
+                                <a href="{{ route('review', ['id' => $stock->id]) }}">この商品のレビューを見る</a>
+                                
                                 {{-- <input type="submit" value="この商品のレビューを見る"> --}}
                             </div>
                         </div>

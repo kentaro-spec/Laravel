@@ -26,8 +26,8 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/checkout', 'ShopController@checkout');
     Route::post('/item_info', 'ShopController@item_info');
     // レビュー機能
-    Route::get('/item_review','ShopController@item_review')->name('review');
-    Route::get('/post_review','ShopController@post_review');
+    Route::get('/item_review/{id}','ShopController@item_review')->name('review');
+    Route::get('/post_review','ShopController@post_review')->name('post_review');
     Route::post('/item_review','ShopController@review');
 });
 
