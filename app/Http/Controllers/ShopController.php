@@ -77,10 +77,11 @@ class ShopController extends Controller
 //    新しく打ち込んだ商品をstocksテーブルに挿入する。
    public function update_item(Request $request, Stock $stock)
    {
-   //  $this->validate($request, Stock::$rules);
+    $this->validate($request, Stock::$rules);
    //  $stock = new Stock;
-    // $stock->imgpath = 'none';
+   //  $stock->imgpath = 'none';
    //  $form = $request->all();
+
     $form = $request->only(['name','detail','fee','imgpath']);
     unset($form['_token']);
    //  $stock->fill($form)->save();
@@ -106,9 +107,8 @@ class ShopController extends Controller
       // $item = Stock::find($id);
 
       // $reviews = Review::where('stock_id',$stock_id)->get();
-      $reviews = Stock::with('reviews')->find($id);
-      // dd($reviews);
-      return view('item_review',['reviews' => $reviews]);
+      $items = Stock::with('reviews')->find($id);
+      return view('item_review',['items' => $items]);
    }
    // 商品のレビュー投稿ページへ
    public function post_review(Request $request)

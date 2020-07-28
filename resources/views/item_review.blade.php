@@ -13,16 +13,16 @@
                 <div class="text-center" style="width: 200px;margin: 20px auto;">
                 </div>
 
-                
+                {{-- {{dd($items)}} --}}
                 {{-- 商品詳細 --}}
-                {{$reviews->name}}
-                {{$reviews->detail}}
-                {{$reviews->fee}}円
-                <img src="/image/{{$reviews->imgpath}}" alt="" class="incart" >
+                {{$items->name}}
+                {{$items->detail}}
+                {{$items->fee}}円
+                <img src="/image/{{$items->imgpath}}" alt="" class="incart" >
                 
 
                 {{-- オブジェクトからコレクションインスタンスをとってそれを回す --}}
-               @foreach ($reviews->reviews as $review) 
+               @foreach ($items->reviews as $review)
                     <table>
                         <tr><th>評価</th><td>星{{$review->evaluation}}</td></tr>
                         <tr><th>レビュータイトル</th><td>{{$review->review_title}}</td></tr>
@@ -30,14 +30,9 @@
                     </table>
                     <br>
                 @endforeach
-                {{-- @foreach($reviews as $review)
-                    
-                    
-                
-                  
-                @endforeach --}}
+
                 {{-- <a href="{{ url('/post_review/?id='.$reviews->id) }}">この商品のレビューを書く</a> --}}
-                <a href="{{ Route('post_review',['id' => $reviews->id]) }}">この商品のレビューを書く</a>
+                <a href="{{ Route('post_review',['id' => $items->id]) }}">この商品のレビューを書く</a>
             </div>
             </div>
        </div>
