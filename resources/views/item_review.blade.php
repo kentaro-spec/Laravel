@@ -13,23 +13,26 @@
                 <div class="text-center" style="width: 200px;margin: 20px auto;">
                 </div>
 
-                
+                {{-- {{dd($items)}} --}}
                 {{-- 商品詳細 --}}
-                {{$item->name}}
-                {{$item->detail}}
-                {{$item->fee}}円
-                <img src="/image/{{$item->imgpath}}" alt="" class="incart" >
-                @foreach($reviews as $review)
+                {{$items->name}}
+                {{$items->detail}}
+                {{$items->fee}}円
+                <img src="/image/{{$items->imgpath}}" alt="" class="incart" >
+                
 
-                <table>
-                    <tr><th>評価</th><td>星{{$review->evaluation}}</td></tr>
-                    <tr><th>レビュータイトル</th><td>{{$review->review_title}}</td></tr>
-                    <tr><th>コメント</th><td>{{$review->comment}}</td></tr>
-                </table>
-                <br>
+                {{-- オブジェクトからコレクションインスタンスをとってそれを回す --}}
+               @foreach ($items->reviews as $review)
+                    <table>
+                        <tr><th>評価</th><td>星{{$review->evaluation}}</td></tr>
+                        <tr><th>レビュータイトル</th><td>{{$review->review_title}}</td></tr>
+                        <tr><th>コメント</th><td>{{$review->comment}}</td></tr>
+                    </table>
+                    <br>
                 @endforeach
-                {{-- <a href="{{ url('/post_review/?id='.$item->id) }}">この商品のレビューを書く</a> --}}
-                <a href="{{ Route('post_review',['id' => $item->id]) }}">この商品のレビューを書く</a>
+
+                {{-- <a href="{{ url('/post_review/?id='.$reviews->id) }}">この商品のレビューを書く</a> --}}
+                <a href="{{ Route('post_review',['id' => $items->id]) }}">この商品のレビューを書く</a>
             </div>
             </div>
        </div>

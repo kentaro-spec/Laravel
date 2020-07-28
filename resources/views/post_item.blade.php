@@ -7,15 +7,17 @@
            <h1 style="color:#555555; text-align:center; font-size:1.2em; padding:24px 0px; font-weight:bold;">商品投稿ページ</h1>
            <div class="">
                 <div class="d-flex flex-row flex-wrap">
-                    {{-- @if (count($errors > 0))
+                    {{-- エラーがあればエラーを表示させる --}}
+                    @if (count($errors) > 0)
                         <div>
                             <ul>
                                 @foreach ($errors->all() as $error)
-                                <li>{{ $eroor }}</li>   
+                                <li>{{ $error }}</li>   
                                 @endforeach
                             </ul>
                         </div>
-                    @endif --}}
+                    @endif
+
                     <form action="/" method="post">
                         @csrf
                         <p>商品名</p>

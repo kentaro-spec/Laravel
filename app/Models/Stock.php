@@ -16,6 +16,10 @@ class Stock extends Model
         'name' => 'required',
         'detail' => 'required',
         'fee' => 'required',
-        // 'imgpath' => 'image',
+        'imgpath' => 'required',
       );
+
+      public function reviews () {
+        return $this->hasMany('App\Models\Review');
+      }
 }
